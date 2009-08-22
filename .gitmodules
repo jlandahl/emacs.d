@@ -1,0 +1,6 @@
+[submodule "org-mode"]
+    path = vendor/org-mode
+    url = git://repo.or.cz/org-mode.git
+[submodule "vendor/org-mode"]
+	path = vendor/org-mode
+	url = git://repo.or.cz/org-mode.git
