@@ -1,15 +1,24 @@
+(defun maybe-add-to-load-path (path)
+  (when (file-accessible-directory-p path)
+    (add-to-list 'load-path path)))
+
 (defmacro with-library (feature &rest body)
-  (when (require ,feature nil t)
-    ,@body)  )
+  (declare (indent defun))
+  `(when (require ,feature nil t)
+     ,@body))
 
 ;;; load-path for misc .el files
-(add-to-list 'load-path "~/.emacs.d/vendor")
+(maybe-add-to-load-path "~/.emacs.d/vendor")
 
 ;;; remember-mode
 (autoload 'remember "remember" nil t)
-(define-key global-map [f8] 'remember)
+(define-key global-map [f5] 'remember)
 
-;;; sorting for dired mode
+;;; anything.el, via anything-config.el
+(with-library 'anything-config
+  (define-key global-map [f8] 'anything-for-files))
+
+;;; sort bindings for dired mode
 (require 'dired)
 (defvar dired-sort-map (make-sparse-keymap))
 (define-key dired-mode-map "s" dired-sort-map)
@@ -18,65 +27,153 @@
 (define-key dired-sort-map "t" (lambda () "sort by Time" (interactive) (dired-sort-other (concat dired-listing-switches "t"))))
 (define-key dired-sort-map "n" (lambda () "sort by Name" (interactive) (dired-sort-other dired-listing-switches)))
 
+;; use dired-x
+(add-hook 'dired-load-hook
+          (lambda ()
+            (load "dired-x")
+            ;; Set dired-x global variables here.  For example:
+            ;; (setq dired-guess-shell-gnutar "gtar")
+            ;; (setq dired-x-hands-off-my-keys nil)
+            ))
+
+;;; add other possible paths to WoMAN's manpath
+(loop for path in '("/usr/sfw/share/man" "/opt/csw/man")
+      when (file-accessible-directory-p path)
+      do (add-to-list 'woman-manpath path))
+
 ;;; org-mode
 
-(add-to-list 'load-path "~/.emacs.d/vendor/org-mode/lisp")
-(add-to-list 'load-path "~/.emacs.d/vendor/org-mode/contrib/lisp")
+(maybe-add-to-load-path "~/.emacs.d/vendor/org-mode/lisp")
+(maybe-add-to-load-path "~/.emacs.d/vendor/org-mode/contrib/lisp")
 
-(require 'org-install)
+(with-library 'org-install
+  (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+  (global-set-key "\C-cl" 'org-store-link)
+  (global-set-key "\C-ca" 'org-agenda)
+  (global-set-key "\C-cb" 'org-iswitchb)
 
-(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
+  (add-hook 'org-mode-hook
+            (lambda ()
+              ;; yasnippet
+              (make-variable-buffer-local 'yas/trigger-key)
+              (setq yas/trigger-key [tab])
+              (define-key yas/keymap [tab] 'yas/next-field-group)
+              ;; flyspell mode to spell check everywhere
+              (flyspell-mode 1)))
 
-(add-to-list 'load-path "~/.emacs.d/vendor/org-mode")
-(add-hook 'org-mode-hook
-          (lambda ()
-            ;; yasnippet
-            (make-variable-buffer-local 'yas/trigger-key)
-            (setq yas/trigger-key [tab])
-            (define-key yas/keymap [tab] 'yas/next-field-group)
-            ;; flyspell mode to spell check everywhere
-            (flyspell-mode 1)))
+  (org-remember-insinuate)
+  (global-set-key (kbd "C-M-r") 'org-remember)
 
-(org-remember-insinuate)
-(global-set-key (kbd "M-r") 'org-remember)
+  ;; Start clock if a remember buffer includes :CLOCK-IN:
+  (add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
 
-;; Start clock if a remember buffer includes :CLOCK-IN:
-(add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
+  (defun my-start-clock-if-needed ()
+    (save-excursion
+      (goto-char (point-min))
+      (when (re-search-forward " *:CLOCK-IN: *" nil t)
+        (replace-match "")
+        (org-clock-in))))
 
-(defun my-start-clock-if-needed ()
-  (save-excursion
-    (goto-char (point-min))
-    (when (re-search-forward " *:CLOCK-IN: *" nil t)
-      (replace-match "")
-      (org-clock-in))))
+  ;; mail integration
 
-;; mail integration
+  (add-hook 'mail-mode-hook 'turn-on-orgstruct)
+  (add-hook 'mail-mode-hook 'turn-on-orgstruct++)
 
-(add-hook 'mail-mode-hook 'turn-on-orgstruct)
-(add-hook 'mail-mode-hook 'turn-on-orgstruct++)
+  (setq message-mode-hook
+        (quote (orgstruct++-mode
+                (lambda nil (setq fill-column 72) (flyspell-mode 1))
+                turn-on-auto-fill
+                bbdb-define-all-aliases))))
 
-(setq message-mode-hook
-      (quote (orgstruct++-mode
-              (lambda nil (setq fill-column 72) (flyspell-mode 1))
-              turn-on-auto-fill
-              bbdb-define-all-aliases)))
+;;; initialize session.el, for saving session state between runs
 
-;;; groovy-mode
-
-(autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
-(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
-(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
-
-;;; initialize session.el, for saving session state between runs of
-;;; Emacs
-
-(add-hook 'after-init-hook 'session-initialize)
+(with-library 'session
+  (add-hook 'after-init-hook 'session-initialize))
 
 ;;; setup epa-file
 
-(when (require 'epa-file nil t)
+(with-library 'epa-file
   (epa-file-enable)
   (setq epa-file-cache-passphrase-for-symmetric-encryption t))
+
+;;; SLIME
+
+(maybe-add-to-load-path "~/.emacs.d/vendor/slime-2009-07-29")
+(with-library 'slime
+  (setq inferior-lisp-program "sbcl")
+  (slime-setup '(slime-asdf slime-fancy slime-tramp)))
+
+;;; groovy-mode
+
+(when (locate-library "groovy-mode")
+  (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
+  (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
+  (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode)))
+
+;;; Python
+
+(with-library 'python
+ (add-hook 'python-mode-hook
+           '(lambda ()
+              (define-key python-mode-map "\C-m" 'newline-and-indent)))
+  ;; ipython.el only works with python-mode.el
+  ;; (with-library 'ipython
+  ;;   ;;(setq ipython-command "/usr/local/bin/ipython")
+  ;;   (setq py-python-command-args '("-colors" "LightBG")))
+  )
+
+;;; Javascript
+
+(when (locate-library "js2-mode")
+  (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode)))
+
+;;; setup yasnippet
+
+(maybe-add-to-load-path "~/.emacs.d/vendor/yasnippet-0.5.10")
+(with-library 'yasnippet
+  (let* ((yasnippet-el (locate-library "yasnippet"))
+         (yasnippet-dir (file-name-directory yasnippet-el)))
+    (yas/initialize)
+    (yas/load-directory (concat yasnippet-dir "snippets"))))
+
+;;; w3m
+
+(maybe-add-to-load-path "~/.emacs.d/vendor/emacs-w3m")
+(with-library 'w3m
+  (setq browse-url-browser-function 'w3m-browse-url)
+  (setq w3m-use-cookies t)
+  ;;(autoload 'w3m-browse-url "w3m" "Ask a WWW browser to show a URL." t)
+  (global-set-key "\C-xm" 'browse-url-at-point)
+
+  (defun w3m-browse-current-buffer ()
+    (interactive)
+    (let ((filename (make-temp-file "w3m-" nil ".html")))
+      (unwind-protect
+          (progn
+            (write-region (point-min) (point-max) filename)
+            (w3m-find-file filename))
+        (delete-file filename)))))
+
+;;; GNUS
+
+;; placeholder for now...
+(add-hook 'gnus-load-hook
+          (lambda ()
+            (require 'message)))
+
+;;; bbdb
+(maybe-add-to-load-path "~/.emacs.d/vendor/bbdb-2.35/lisp")
+(with-library 'bbdb
+  ;; add to the Info path, if needed and possible
+  (let* ((bbdb-code-path (file-name-directory (locate-library "bbdb")))
+         (bbdb-info-path (expand-file-name (concat bbdb-code-path "../info"))))
+    (when (file-accessible-directory-p bbdb-info-path)
+      (setq Info-additional-directory-list (list bbdb-info-path))))
+
+  (bbdb-initialize 'gnus 'message)
+  (when (require 'message nil t)
+    (bbdb-insinuate-message))
+
+  (add-hook 'message-setup-hook 'bbdb-define-all-aliases)
+  (setq bbdb-default-country "US"))
+
