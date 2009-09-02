@@ -16,7 +16,18 @@
 
 ;;; anything.el, via anything-config.el
 (with-library 'anything-config
-  (define-key global-map [f8] 'anything-for-files))
+  (define-key global-map [f8] 'anything)
+
+  (setq anything-sources
+        (list anything-c-source-buffers
+              anything-c-source-file-name-history
+              anything-c-source-info-pages
+              anything-c-source-man-pages
+              anything-c-source-file-cache
+              anything-c-source-emacs-commands
+              anything-c-source-bookmarks
+              anything-c-source-google-suggest
+              anything-c-source-locate)))
 
 ;;; sort bindings for dired mode
 (require 'dired)
@@ -136,6 +147,21 @@
     (yas/initialize)
     (yas/load-directory (concat yasnippet-dir "snippets"))))
 
+;;; automark
+
+(when (require 'auto-mark nil t)
+  (setq auto-mark-command-class-alist
+        '((anything . anything)
+          (goto-line . jump)
+          (indent-for-tab-command . ignore)
+          (undo . ignore)))
+  (setq auto-mark-command-classifiers
+        (list (lambda (command)
+                (if (and (eq command 'self-insert-command)
+                         (eq last-command-char ? ))
+                    'ignore))))
+  (global-auto-mark-mode 1))
+
 ;;; w3m
 
 (maybe-add-to-load-path "~/.emacs.d/vendor/emacs-w3m")
@@ -154,12 +180,11 @@
             (w3m-find-file filename))
         (delete-file filename)))))
 
-;;; GNUS
+;; winner-mode, for automatic saving and easy restoring of window
+;; configurations
 
-;; placeholder for now...
-(add-hook 'gnus-load-hook
-          (lambda ()
-            (require 'message)))
+(when (fboundp 'winner-mode)
+  (winner-mode t))
 
 ;;; bbdb
 (maybe-add-to-load-path "~/.emacs.d/vendor/bbdb-2.35/lisp")
@@ -177,3 +202,44 @@
   (add-hook 'message-setup-hook 'bbdb-define-all-aliases)
   (setq bbdb-default-country "US"))
 
+;;; Misc functions
+
+;; from http://www.emacswiki.org/emacs/SwitchToGnus
+(defun switch-to-gnus (&optional arg)
+  "Switch to a Gnus related buffer.
+   Candidates are buffers starting with
+   *mail or *reply or *wide reply
+   *Summary or
+   *Group*
+
+    Use a prefix argument to start Gnus if no candidate exists."
+  (interactive "P")
+  (let (candidate
+        (alist '(("^\\*\\(mail\\|\\(wide \\)?reply\\)" t)
+                 ("^\\*Group")
+                 ("^\\*Summary")
+                 ("^\\*Article" nil (lambda ()
+                                      (buffer-live-p gnus-article-current-summary))))))
+    (catch 'none-found
+      (dolist (item alist)
+        (let (last
+              (regexp (nth 0 item))
+              (optional (nth 1 item))
+              (test (nth 2 item)))
+          (dolist (buf (buffer-list))
+            (when (and (string-match regexp (buffer-name buf))
+                       (> (buffer-size buf) 0))
+              (setq last buf)))
+          (cond ((and last (or (not test) (funcall test)))
+                 (setq candidate last))
+                (optional
+                 nil)
+                (t
+                 (throw 'none-found t))))))
+    (cond (candidate
+           (switch-to-buffer candidate))
+          (arg
+           (gnus))
+          (t
+           (error "No candidate found")))))
+(global-set-key (kbd "C-c n") 'switch-to-gnus)
