@@ -48,7 +48,7 @@
             ))
 
 ;;; add other possible paths to WoMAN's manpath
-(loop for path in '("/usr/sfw/share/man" "/opt/csw/man")
+(loop for path in '("/usr/sfw/share/man" "/opt/csw/man" "/usr/local/man")
       when (file-accessible-directory-p path)
       do (add-to-list 'woman-manpath path))
 
@@ -207,12 +207,10 @@
 ;; from http://www.emacswiki.org/emacs/SwitchToGnus
 (defun switch-to-gnus (&optional arg)
   "Switch to a Gnus related buffer.
-   Candidates are buffers starting with
-   *mail or *reply or *wide reply
-   *Summary or
-   *Group*
+   Candidates are buffers starting with *mail or *reply or *wide
+   reply *Summary or *Group*
 
-    Use a prefix argument to start Gnus if no candidate exists."
+   Use a prefix argument to start Gnus if no candidate exists."
   (interactive "P")
   (let (candidate
         (alist '(("^\\*\\(mail\\|\\(wide \\)?reply\\)" t)
