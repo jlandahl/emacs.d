@@ -1,3 +1,5 @@
+(server-start)
+
 (defun maybe-add-to-load-path (path)
   (when (file-accessible-directory-p path)
     (add-to-list 'load-path path)))
@@ -114,12 +116,19 @@
   (setq inferior-lisp-program "sbcl")
   (slime-setup '(slime-asdf slime-fancy slime-tramp)))
 
-;;; groovy-mode
+;;; Groovy support
 
 (when (locate-library "groovy-mode")
   (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
   (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
   (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode)))
+
+(autoload 'run-groovy "inf-groovy" "Run an inferior Groovy process")
+(autoload 'inf-groovy-keys "inf-groovy" "Set local key defs for inf-groovy in groovy-mode")
+
+(add-hook 'groovy-mode-hook
+          '(lambda ()
+             (inf-groovy-keys)))
 
 ;;; Python
 
