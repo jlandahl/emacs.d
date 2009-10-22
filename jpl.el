@@ -14,7 +14,7 @@
 
 ;;; remember-mode
 (autoload 'remember "remember" nil t)
-(define-key global-map [f5] 'remember)
+(define-key global-map [f5] 'org-remember)
 
 ;;; anything.el, via anything-config.el
 (with-library 'anything-config
@@ -75,7 +75,8 @@
               (flyspell-mode 1)))
 
   (org-remember-insinuate)
-  (global-set-key (kbd "C-M-r") 'org-remember)
+  ;;(global-set-key (kbd "C-M-r") 'org-remember)
+  (define-key global-map (kbd "C-M-r") 'org-remember)
 
   ;; Start clock if a remember buffer includes :CLOCK-IN:
   (add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
