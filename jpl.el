@@ -1,6 +1,4 @@
-(server-start)
-
-(defun maybe-add-to-load-path (path)
+(defun maybe-add-load-path (path)
   (when (file-accessible-directory-p path)
     (add-to-list 'load-path path)))
 
@@ -9,8 +7,16 @@
   `(when (require ,feature nil t)
      ,@body))
 
+(setq windows (equal system-type 'windows-nt))
+(setq unix    (not windows))
+
+(cond (windows (enable-theme 'jpl-win))
+      (t
+       (server-start)
+       (enable-theme 'jpl)))
+
 ;;; load-path for misc .el files
-(maybe-add-to-load-path "~/.emacs.d/vendor")
+(maybe-add-load-path "~/.emacs.d/vendor")
 
 ;;; remember-mode
 (autoload 'remember "remember" nil t)
@@ -56,8 +62,8 @@
 
 ;;; org-mode
 
-(maybe-add-to-load-path "~/.emacs.d/vendor/org-mode/lisp")
-(maybe-add-to-load-path "~/.emacs.d/vendor/org-mode/contrib/lisp")
+(maybe-add-load-path "~/.emacs.d/vendor/org-mode/lisp")
+(maybe-add-load-path "~/.emacs.d/vendor/org-mode/contrib/lisp")
 
 (with-library 'org-install
   (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
@@ -104,15 +110,26 @@
 (with-library 'session
   (add-hook 'after-init-hook 'session-initialize))
 
-;;; setup epa-file
+;;; setup epg
 
-(with-library 'epa-file
-  (epa-file-enable)
-  (setq epa-file-cache-passphrase-for-symmetric-encryption t))
+;; apparently not necessary in Emacs 23
+;; (with-library 'epa-file
+;;   (epa-file-enable)
+;;   )
+
+;; From http://www.enigmacurry.com/2009/01/14/extending-emacs-with-advice/
+;; force epg to ignore the GPG_AGENT_INFO environment variable, so
+;; password prompts will happen in the minibuffer.
+(defadvice epg--start (around advice-epg-disable-agent disable)
+  "Make epg--start not able to find a gpg-agent"
+  (let ((agent (getenv "GPG_AGENT_INFO")))
+    (setenv "GPG_AGENT_INFO" nil)
+    ad-do-it
+    (setenv "GPG_AGENT_INFO" agent)))
 
 ;;; SLIME
 
-(maybe-add-to-load-path "~/.emacs.d/vendor/slime-2009-07-29")
+(maybe-add-load-path "~/.emacs.d/vendor/slime-2009-07-29")
 (with-library 'slime
   (setq inferior-lisp-program "sbcl")
   (slime-setup '(slime-asdf slime-fancy slime-tramp)))
@@ -122,14 +139,14 @@
 (when (locate-library "groovy-mode")
   (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
   (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
-  (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode)))
+  (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 
-(autoload 'run-groovy "inf-groovy" "Run an inferior Groovy process")
-(autoload 'inf-groovy-keys "inf-groovy" "Set local key defs for inf-groovy in groovy-mode")
+  (autoload 'run-groovy "inf-groovy" "Run an inferior Groovy process")
+  (autoload 'inf-groovy-keys "inf-groovy" "Set local key defs for inf-groovy in groovy-mode")
 
-(add-hook 'groovy-mode-hook
-          '(lambda ()
-             (inf-groovy-keys)))
+  (add-hook 'groovy-mode-hook
+            '(lambda ()
+               (inf-groovy-keys))))
 
 ;;; Python
 
@@ -150,7 +167,7 @@
 
 ;;; setup yasnippet
 
-(maybe-add-to-load-path "~/.emacs.d/vendor/yasnippet-0.5.10")
+(maybe-add-load-path "~/.emacs.d/vendor/yasnippet-0.5.10")
 (with-library 'yasnippet
   (let* ((yasnippet-el (locate-library "yasnippet"))
          (yasnippet-dir (file-name-directory yasnippet-el)))
@@ -174,7 +191,7 @@
 
 ;;; w3m
 
-(maybe-add-to-load-path "~/.emacs.d/vendor/emacs-w3m")
+(maybe-add-load-path "~/.emacs.d/vendor/emacs-w3m")
 (with-library 'w3m
   (setq browse-url-browser-function 'w3m-browse-url)
   (setq w3m-use-cookies t)
@@ -197,7 +214,7 @@
   (winner-mode t))
 
 ;;; bbdb
-(maybe-add-to-load-path "~/.emacs.d/vendor/bbdb-2.35/lisp")
+(maybe-add-load-path "~/.emacs.d/vendor/bbdb-2.35/lisp")
 (with-library 'bbdb
   ;; add to the Info path, if needed and possible
   (let* ((bbdb-code-path (file-name-directory (locate-library "bbdb")))
