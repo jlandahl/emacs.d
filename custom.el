@@ -12,6 +12,8 @@
  '(epa-file-cache-passphrase-for-symmetric-encryption t)
  '(epa-info-window-height 2)
  '(epa-popup-info-window nil)
+ '(gnus-init-file "~/lib/emacs/dot-gnus.el")
+ '(gnus-startup-file "~/lib/emacs/dot-newsrc")
  '(ido-mode (quote both) nil (ido))
  '(menu-bar-mode t)
  '(nxml-child-indent 4)
@@ -33,6 +35,8 @@
  '(org-icalendar-include-todo t)
  '(org-log-done (quote time))
  '(org-log-into-drawer t)
+ '(org-mobile-directory "~/mnt/mydisk.se/org")
+ '(org-mobile-inbox-for-pull "~/lib/org/from-mobile.org")
  '(org-odd-levels-only t)
  '(org-outline-path-complete-in-steps t)
  '(org-refile-targets (quote ((org-agenda-files :maxlevel . 3) (nil :maxlevel . 3))))
@@ -55,7 +59,6 @@
  '(org-todo-state-tags-triggers (quote (("CANCELLED" ("CANCELLED" . t)) ("WAITING" ("WAITING" . t)) (done ("NEXT") ("WAITING")) ("TODO" ("WAITING") ("CANCELLED")) ("STARTED" ("WAITING") ("NEXT" . t)))))
  '(safe-local-variable-values (quote ((epa-file-encrypt-to ”john@landahl\.org”) (flyspell-highlight-flag) (ffip-regexp . ".*\\.groovy") (ffip-regexp . ".*\\.el"))))
  '(scroll-bar-mode (quote right))
- '(show-paren-mode t)
  '(tab-width 4)
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)
@@ -69,6 +72,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#ffffff" :foreground "#141312" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 111 :width normal :foundry "unknown" :family "DejaVu Sans Mono"))))
  '(flyspell-duplicate ((t (:foreground "Gold3" :underline t :weight bold))))
  '(gnus-summary-cancelled ((t (:foreground "light gray"))))
  '(gnus-summary-normal-read ((((class color) (background light)) (:foreground "dim gray"))))

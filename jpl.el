@@ -129,10 +129,10 @@
 
 ;;; SLIME
 
-(maybe-add-load-path "~/.emacs.d/vendor/slime-2009-07-29")
-(with-library 'slime
-  (setq inferior-lisp-program "sbcl")
-  (slime-setup '(slime-asdf slime-fancy slime-tramp)))
+;; (maybe-add-load-path "~/.emacs.d/vendor/slime-2009-07-29")
+;; (with-library 'slime
+;;   (setq inferior-lisp-program "sbcl")
+;;   (slime-setup '(slime-asdf slime-fancy slime-tramp)))
 
 ;;; Groovy support
 
