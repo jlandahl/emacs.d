@@ -7,16 +7,22 @@
   `(when (require ,feature nil t)
      ,@body))
 
+(server-start)
+
 (setq windows (equal system-type 'windows-nt))
 (setq unix    (not windows))
 
 (cond (windows (enable-theme 'jpl-win))
-      (t
-       (server-start)
-       (enable-theme 'jpl)))
+      (unix    (enable-theme 'jpl)))
 
 ;;; load-path for misc .el files
 (maybe-add-load-path "~/.emacs.d/vendor")
+
+;;; color-theme
+
+(maybe-add-load-path "~/.emacs.d/vendor/color-theme-6.6.0")
+(with-library 'color-theme
+  nil)
 
 ;;; remember-mode
 (autoload 'remember "remember" nil t)
@@ -78,7 +84,8 @@
               (setq yas/trigger-key [tab])
               (define-key yas/keymap [tab] 'yas/next-field-group)
               ;; flyspell mode to spell check everywhere
-              (flyspell-mode 1)))
+              ;;(flyspell-mode 1)
+              ))
 
   (org-remember-insinuate)
   ;;(global-set-key (kbd "C-M-r") 'org-remember)
@@ -140,6 +147,9 @@
   (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
   (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
   (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
+
+  ;; workaround for a bug that will apparently next get fixed
+  (setq groovy-block-mid-re nil)
 
   (autoload 'run-groovy "inf-groovy" "Run an inferior Groovy process")
   (autoload 'inf-groovy-keys "inf-groovy" "Set local key defs for inf-groovy in groovy-mode")
