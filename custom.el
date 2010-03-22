@@ -107,10 +107,6 @@ Bcc:
  '(smtpmail-default-smtp-server "calmail.berkeley.edu")
  '(smtpmail-starttls-credentials (quote (("calmail.berkeley.edu" 25 nil nil))))
  '(tab-width 4)
- '(tramp-password-prompt-regexp "^.*\\([pP]assword\\|[pP]assphrase\\|[rR]esponse\\).*:
- '(tramp-remote-path (quote (tramp-default-remote-path "/usr/sbin" "/usr/local/bin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin")))
- '(tramp-shell-prompt-pattern "^[^#$%>
-]*[]#$%>] *\\(\\[[0-9;]*[a-zA-Z] *\\)*")
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)
  '(user-full-name "John Landahl")
