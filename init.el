@@ -1,3 +1,17 @@
+(set-foreground-color "gray")
+(set-background-color "black")
+(set-frame-font "Consolas 10" t)
+
+(setq default-frame-alist '((height . 50) (width . 120)
+                            (menu-bar-lines . 1)
+                            (foreground-color . "gray")
+                            (background-color . "black")
+                            (frame-font "Consolas 10" t)
+                            (cursor-color . "red")
+                            (scroll-bar-width . 11)
+                            ;;(top . 72) (left . 1500)
+                            ))
+
 ;;; init.el --- Where all the magic begins
 ;;
 ;; Part of the Emacs Starter Kit

@@ -12,17 +12,24 @@
 (setq windows (equal system-type 'windows-nt))
 (setq unix    (not windows))
 
-(cond (windows (enable-theme 'jpl-win))
-      (unix    (enable-theme 'jpl)))
+(when windows
+  (setq ispell-program-name "aspell"
+        tramp-default-method "plink"
+        browse-url-firefox-program "c:/program files/mozilla firefox/firefox.exe"
+        org-mobile-directory "w:/org"))
 
 ;;; load-path for misc .el files
 (maybe-add-load-path "~/.emacs.d/vendor")
 
-;;; color-theme
+;;; colors, color-theme
+
+;;(set-face-background 'hl-line "#111")
 
 (maybe-add-load-path "~/.emacs.d/vendor/color-theme-6.6.0")
 (with-library 'color-theme
-  nil)
+  (require 'color-theme-autoloads "color-theme-autoloads")
+  ;;(color-theme-comidia)
+  )
 
 ;;; remember-mode
 (autoload 'remember "remember" nil t)
@@ -76,6 +83,9 @@
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda)
   (global-set-key "\C-cb" 'org-iswitchb)
+
+  (require 'org-checklist)
+  (require 'org-protocol)
 
   (add-hook 'org-mode-hook
             (lambda ()
