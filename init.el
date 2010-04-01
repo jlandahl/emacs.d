@@ -1,12 +1,17 @@
+(setq windows (equal system-type 'windows-nt))
+(setq unix    (not windows))
+
+(setq jpl-font (if windows "Consolas 10" "DejaVu Sans Mono 10"))
+
 (set-foreground-color "gray")
 (set-background-color "black")
-(set-frame-font "Consolas 10" t)
+(set-frame-font jpl-font t)
 
 (setq default-frame-alist '((height . 50) (width . 120)
                             (menu-bar-lines . 1)
                             (foreground-color . "gray")
                             (background-color . "black")
-                            (frame-font "Consolas 10" t)
+                            (frame-font jpl-font t)
                             (cursor-color . "red")
                             (scroll-bar-width . 11)
                             ;;(top . 72) (left . 1500)
