@@ -14,6 +14,7 @@
  '(blink-cursor-mode nil)
  '(bookmark-default-file "~/lib/emacs/emacs.bmk")
  '(browse-url-browser-function (quote (("tms\\.berkeley\\.edu" . browse-url-firefox) (".*" . w3m-browse-url))))
+ '(c-basic-offset 4)
  '(calendar-latitude 37.871786)
  '(calendar-location-name "Berkeley, CA")
  '(calendar-longitude -122.268305)

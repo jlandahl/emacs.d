@@ -153,20 +153,25 @@
 
 ;;; Groovy support
 
+(maybe-add-load-path "~/.emacs.d/vendor/groovy-mode")
 (when (locate-library "groovy-mode")
-  (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
+  (require 'groovy-mode)
   (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
   (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 
-  ;; workaround for a bug that will apparently next get fixed
-  (setq groovy-block-mid-re nil)
+  (when (locate-library "groovy-electric")
+    (add-hook 'groovy-mode-hook
+              '(lambda ()
+                 (require 'groovy-electric)
+                 (groovy-electric-mode))))
 
-  (autoload 'run-groovy "inf-groovy" "Run an inferior Groovy process")
-  (autoload 'inf-groovy-keys "inf-groovy" "Set local key defs for inf-groovy in groovy-mode")
+  (when (locate-library "inf-groovy")
+    (autoload 'run-groovy "inf-groovy" "Run an inferior Groovy process")
+    (autoload 'inf-groovy-keys "inf-groovy" "Set local key defs for inf-groovy in groovy-mode")
 
-  (add-hook 'groovy-mode-hook
-            '(lambda ()
-               (inf-groovy-keys))))
+    (add-hook 'groovy-mode-hook
+              '(lambda ()
+                 (inf-groovy-keys)))))
 
 ;;; Python
 
