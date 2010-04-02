@@ -33,7 +33,7 @@
  '(gnus-inhibit-user-auto-expire nil)
  '(gnus-init-file "~/lib/emacs/dot-gnus.el")
  '(gnus-message-archive-group (quote (("Berkeley" "nnimap+Berkeley:Sent") ("UCSC" "nnimap+UCSC:Sent"))))
- '(gnus-parameters (quote (("^nnimap.*:[Ss]ent" (expiry-wait . never)) ("^nnimap.*Trash" (expiry-wait . 60) (expiry-target . delete)) ("^nnimap\\+Berkeley:Calendar/inbox" (expiry-target . "nnimap+Berkeley:Calendar/archive")) ("^nnimap\\+Berkeley:Calendar/archive" (expiry-wait . 30) (expiry-target . "nnimap+Berkeley:Trash")) ("^nnimap\\+Berkeley.*" (expiry-wait . 14) (expiry-target . "nnimap+Berkeley:Trash")) ("^nnimap\\+UCSC.*" (expiry-target . "nnimap+UCSC:Trash")))))
+ '(gnus-parameters (quote (("^nnimap.*:[Ss]ent" (expiry-wait . never)) ("^nnimap.*Trash" (expiry-wait . 60) (expiry-target . delete)) ("DISABLE^nnimap\\+Berkeley.*" (expiry-wait . 14) (expiry-target . "nnimap+Berkeley:Trash")) ("DISABLE^nnimap\\+UCSC.*" (expiry-target . "nnimap+UCSC:Trash")))))
  '(gnus-secondary-select-methods (quote ((nnimap "Berkeley" (nnimap-address "calmail.berkeley.edu") (nnimap-stream tls) (nnimap-authinfo-file "~/lib/emacs/authinfo.gpg") (nnir-search-engine imap)) (nnimap "UCSC" (nnimap-address "cruzmail.ucsc.edu") (nnimap-stream ssl) (nnimap-authinfo-file "~/lib/emacs/authinfo.gpg") (nnir-search-engine imap)))))
  '(gnus-select-method (quote (nnml "")))
  '(gnus-startup-file "~/lib/emacs/dot-newsrc")

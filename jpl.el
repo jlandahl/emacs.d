@@ -27,7 +27,7 @@
 
 (maybe-add-load-path "~/.emacs.d/vendor/color-theme-6.6.0")
 (with-library 'color-theme
-  ;;(require 'color-theme-autoloads "color-theme-autoloads")
+  (require 'color-theme-autoloads "color-theme-autoloads")
   ;;(color-theme-comidia)
   )
 

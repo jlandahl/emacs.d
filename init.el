@@ -3,17 +3,17 @@
 
 (setq jpl-font (if windows "Consolas 10" "DejaVu Sans Mono 10"))
 
-(set-foreground-color "gray")
-(set-background-color "black")
+;;(set-foreground-color "gray")
+;;(set-background-color "black")
 (set-frame-font jpl-font t)
 
-(setq default-frame-alist '((height . 50) (width . 120)
+(setq default-frame-alist '((height . 50) (width . 100)
                             (menu-bar-lines . 1)
-                            (foreground-color . "gray")
-                            (background-color . "black")
+                            ;;(foreground-color . "gray")
+                            ;;(background-color . "black")
                             (frame-font jpl-font t)
-                            (cursor-color . "red")
-                            (scroll-bar-width . 11)
+                            ;;(cursor-color . "red")
+                            (scroll-bar-width . 15)
                             ;;(top . 72) (left . 1500)
                             ))
 
