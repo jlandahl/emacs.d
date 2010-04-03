@@ -125,7 +125,7 @@ to continue it."
   (comint-mode)
   ;; Customise in inferior-groovy-mode-hook
   (setq comint-prompt-regexp inferior-groovy-prompt-pattern)
-  (groovy-mode-variables)
+  ;;(groovy-mode-variables)
   (setq major-mode 'inferior-groovy-mode)
   (setq mode-name "Inferior Groovy")
   (setq mode-line-process '(":%s"))
