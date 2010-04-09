@@ -40,10 +40,10 @@
 (defvar groovy-program-name "groovysh"
   "*Program invoked by the run-groovy command")
 
-(defvar inferior-groovy-first-prompt-pattern "^groovy> *"
+(defvar inferior-groovy-first-prompt-pattern "^groovy:000> *"
   "first prompt regex pattern of groovy interpreter.")
 
-(defvar inferior-groovy-prompt-pattern "^groovy> *"
+(defvar inferior-groovy-prompt-pattern "^groovy:000> *"
   "prompt regex pattern of groovy interpreter.")
 
 ;;

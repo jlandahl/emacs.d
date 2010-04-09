@@ -18,6 +18,9 @@
         browse-url-firefox-program "c:/program files/mozilla firefox/firefox.exe"
         org-mobile-directory "w:/org"))
 
+;; indent with Enter/C-m please
+(global-set-key "\C-m" 'newline-and-indent)
+
 ;;; load-path for misc .el files
 (maybe-add-load-path "~/.emacs.d/vendor")
 
