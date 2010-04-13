@@ -76,6 +76,7 @@ Bcc:
  '(org-clock-in-switch-to-state "STARTED")
  '(org-completion-use-ido t)
  '(org-cycle-include-plain-lists t)
+ '(org-cycle-separator-lines 1)
  '(org-default-notes-file "~/lib/org/inbox.org")
  '(org-directory "~/lib/org")
  '(org-hide-leading-stars t)
@@ -137,4 +138,4 @@ Bcc:
  '(ido-first-match ((t (:foreground "blue" :weight bold))))
  '(ido-only-match ((((class color)) (:foreground "ForestGreen" :weight bold))))
  '(ido-subdir ((((min-colors 88) (class color)) (:foreground "goldenrod"))))
- '(widget-field ((t (:background "darkslategray")))))
+ '(widget-field ((t (:background "lightgray")))))
