@@ -124,6 +124,7 @@ Bcc:
  '(user-mail-address "jlandahl@berkeley.edu")
  '(vc-follow-symlinks t)
  '(w3m-cookie-accept-bad-cookies (quote ask))
+ '(woman-manpath (quote ("/usr/man" "/usr/share/man" "/usr/local/man" "c:/cygwin/usr/man" "c:/cygwin/usr/share/man")))
  '(x-select-enable-clipboard t))
 
 (custom-set-faces
