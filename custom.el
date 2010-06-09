@@ -131,6 +131,7 @@ Bcc:
  '(vc-follow-symlinks t)
  '(w3m-cookie-accept-bad-cookies (quote ask))
  '(woman-use-own-frame nil)
+ '(woman-manpath (quote ("/usr/man" "/usr/share/man" "/usr/local/man" "c:/cygwin/usr/man" "c:/cygwin/usr/share/man")))
  '(x-select-enable-clipboard t))
 
 (custom-set-faces
