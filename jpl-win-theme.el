@@ -5,6 +5,7 @@
  'jpl-win
  '(ispell-program-name "aspell")
  '(tramp-default-method "plink")
+ '(browse-url-browser-function browse-url-firefox)
  '(browse-url-firefox-program "c:/program files/mozilla firefox/firefox.exe")
  '(org-mobile-directory "w:/org"))
 
