@@ -36,7 +36,7 @@
 
 ;;; remember-mode
 (autoload 'remember "remember" nil t)
-(define-key global-map [f5] 'org-remember)
+(define-key global-map [f5] 'org-capture)
 
 ;;; anything.el, via anything-config.el
 (with-library 'anything-config
@@ -90,6 +90,8 @@
   ;(require 'org-checklist)
   (require 'org-protocol)
 
+  ;; TODO: add info file to Info-additional-directory-list
+  
   (add-hook 'org-mode-hook
             (lambda ()
               ;; yasnippet
