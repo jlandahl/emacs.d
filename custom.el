@@ -84,9 +84,11 @@ Bcc:
  '(org-agenda-tags-todo-honor-ignore-options t)
  '(org-agenda-todo-list-sublevels nil)
  '(org-archive-mark-done nil)
- '(org-capture-templates (quote (("t" "Todo item to inbox" entry (file "~/lib/org/inbox.org") "* TODO %?
+ '(org-capture-templates (quote (("t" "Tasks") ("tw" "Todo item to inbox (work)" entry (file+headline "" "Work") "* TODO %?
   %u
-  %a") ("n" "note" entry (file "~/lib/org/inbox.org") "* %?                                              :NOTE:
+  %a") ("tp" "Todo item to inbox (personal)" entry (file+headline "" "Personal") "* TODO %?
+  %u
+  %a") ("n" "note" entry (file+headline "" "Notes") "* %?                                              :NOTE:
   %u
   %a") ("p" "phone" entry (file "~/lib/org/inbox.org") "* PHONE %:name - %:company -                      :PHONE:
   Contact Info: %a
@@ -96,7 +98,7 @@ Bcc:
   %?") ("w" "Web" entry (file "~/lib/org/inbox.org") "* %?
   %u, %c
   %i"))))
- '(org-clock-in-switch-to-state "STARTED")
+ '(org-clock-in-switch-to-state (quote jpl-clockin-state-change))
  '(org-completion-use-ido t)
  '(org-cycle-include-plain-lists t)
  '(org-cycle-separator-lines 1)
@@ -143,6 +145,7 @@ Bcc:
  '(smtpmail-default-smtp-server "calmail.berkeley.edu")
  '(smtpmail-starttls-credentials (quote (("calmail.berkeley.edu" 25 nil nil))))
  '(tab-width 4)
+ '(tramp-default-proxies-alist (quote (("\\.pureplay\\.com" "root\\|build" "/ssh:%h:"))))
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)
  '(user-full-name "John Landahl")
@@ -166,6 +169,7 @@ Bcc:
  '(ido-subdir ((((min-colors 88) (class color)) (:foreground "goldenrod"))))
  '(org-document-title ((((class color) (background light)) (:foreground "midnight blue" :weight bold :height 1.2))))
  '(widget-field ((t (:background "lightgray")))))
+
 
 
 

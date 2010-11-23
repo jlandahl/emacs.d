@@ -37,6 +37,7 @@
 ;;; remember-mode
 (autoload 'remember "remember" nil t)
 (define-key global-map [f5] 'org-capture)
+(define-key global-map "\C-cc" 'org-capture)
 
 ;;; anything.el, via anything-config.el
 (with-library 'anything-config
@@ -90,6 +91,25 @@
   ;(require 'org-checklist)
   (require 'org-protocol)
 
+  ;; 
+  (defun jpl-clockin-state-change (current-state)
+    "Called when clocking in on an item in org-mode. Return a new
+     state as a string or nil for no state change. Set in the
+     org-clock-in-switch-to-state option.
+
+     The desired behavior is to return 'STARTED' for the new
+     state for any item that has currently has a state set (which
+     is not already 'STARTED'). For items with no state
+     set (i.e. where current-state is nil), return nil to tell
+     org-mode not to make a state change.
+
+     Previously I had the string 'STARTED' as the value for
+     org-clock-in-switch-to-state, but this had the unwanted side
+     effect of converting non-todo items into todo items."
+    (when (and (stringp current-state)
+               (not (string= current-state "STARTED")))
+      "STARTED"))
+
   ;; TODO: add info file to Info-additional-directory-list
   
   (add-hook 'org-mode-hook
@@ -104,7 +124,7 @@
 
   (org-remember-insinuate)
   ;;(global-set-key (kbd "C-M-r") 'org-remember)
-  (define-key global-map (kbd "C-M-r") 'org-remember)
+  ;;(define-key global-map (kbd "C-M-r") 'org-remember)
 
   ;; Start clock if a remember buffer includes :CLOCK-IN:
   (add-hook 'remember-mode-hook 'my-start-clock-if-needed 'append)
