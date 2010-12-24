@@ -30,8 +30,15 @@
 
 (maybe-add-load-path "~/.emacs.d/vendor/color-theme-6.6.0")
 (with-library 'color-theme
-  ;;(require 'color-theme-autoloads "color-theme-autoloads")
+  (require 'color-theme-autoloads "color-theme-autoloads")
+  (color-theme-initialize)
   ;;(color-theme-comidia)
+  ;;(color-theme-feng-shui)
+  ;;(color-theme-scintilla)
+  ;;(color-theme-vim-colors)
+  ;;(color-theme-snowish)
+  (load "jpl-color-themes")
+  (color-theme-jpl-standard)
   )
 
 ;;; remember-mode
@@ -54,14 +61,14 @@
               anything-c-source-google-suggest
               anything-c-source-locate)))
 
-;;; sort bindings for dired mode
-(require 'dired)
-(defvar dired-sort-map (make-sparse-keymap))
-(define-key dired-mode-map "s" dired-sort-map)
-(define-key dired-sort-map "s" (lambda () "sort by Size" (interactive) (dired-sort-other (concat dired-listing-switches "S"))))
-(define-key dired-sort-map "x" (lambda () "sort by eXtension" (interactive) (dired-sort-other (concat dired-listing-switches "X"))))
-(define-key dired-sort-map "t" (lambda () "sort by Time" (interactive) (dired-sort-other (concat dired-listing-switches "t"))))
-(define-key dired-sort-map "n" (lambda () "sort by Name" (interactive) (dired-sort-other dired-listing-switches)))
+;;; dired customizations
+
+(require 'dired+)
+(require 'dired-details+)
+(require 'dired-sort-menu+)
+(require 'dired-sort-map)
+
+(setq dired-omit-files (concat dired-omit-files "\\|^\\.git$\\|\\.svn\\|^RCS$\\|,v$"))
 
 ;; use dired-x
 (add-hook 'dired-load-hook
@@ -73,9 +80,9 @@
             ))
 
 ;;; add other possible paths to WoMAN's manpath
-(loop for path in '("/usr/sfw/share/man" "/opt/csw/man" "/usr/local/man")
-      when (file-accessible-directory-p path)
-      do (add-to-list 'woman-manpath path))
+;; (loop for path in '("/usr/sfw/share/man" "/opt/csw/man" "/usr/local/man")
+;;       when (file-accessible-directory-p path)
+;;       do (add-to-list 'woman-manpath path))
 
 ;;; org-mode
 
@@ -146,6 +153,9 @@
                 (lambda nil (setq fill-column 72) (flyspell-mode 1))
                 turn-on-auto-fill
                 bbdb-define-all-aliases))))
+
+(maybe-add-load-path "~/.emacs.d/vendor/bookmark+")
+(require 'bookmark+ nil t)
 
 ;;; initialize session.el, for saving session state between runs
 
@@ -318,3 +328,42 @@
           (t
            (error "No candidate found")))))
 (global-set-key (kbd "C-c n") 'switch-to-gnus)
+
+;;
+;; [12/22/2010] Previous collection of face customizations:
+;;
+;; (custom-set-faces
+;;   ;; custom-set-faces was added by Custom.
+;;   ;; If you edit it by hand, you could mess it up, so be careful.
+;;   ;; Your init file should contain only one such instance.
+;;   ;; If there is more than one, they won't work right.
+;;  '(default ((t (:inherit nil :stipple nil :background "white" :foreground "black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "Liberation Mono"))))
+;;  '(diredp-compressed-file-suffix ((t (:foreground "orange3"))))
+;;  '(diredp-date-time ((t (:background "gray92"))))
+;;  '(diredp-dir-heading ((t (:foreground "Blue" :underline "gray50"))))
+;;  '(diredp-dir-priv ((t (:foreground "Blue"))))
+;;  '(diredp-exec-priv ((t nil)))
+;;  '(diredp-file-name ((t nil)))
+;;  '(diredp-file-suffix ((t (:foreground "Gray25"))))
+;;  '(diredp-ignored-file-name ((t (:foreground "darkslategray4"))))
+;;  '(diredp-link-priv ((t nil)))
+;;  '(diredp-no-priv ((t nil)))
+;;  '(diredp-number ((t (:foreground "green4"))))
+;;  '(diredp-read-priv ((t nil)))
+;;  '(diredp-symlink ((t (:foreground "darkorange4"))))
+;;  '(diredp-write-priv ((t (:weight bold))))
+;;  '(flyspell-duplicate ((t (:foreground "Gold3" :underline t :weight bold))))
+;;  '(font-lock-builtin-face ((((class color) (min-colors 88) (background light)) (:foreground "blue3"))))
+;;  '(font-lock-comment-face ((((class color) (min-colors 88) (background light)) (:foreground "dark khaki"))))
+;;  '(font-lock-keyword-face ((((class color) (min-colors 88) (background light)) (:foreground "black" :weight bold))))
+;;  '(font-lock-string-face ((((class color) (min-colors 88) (background light)) (:foreground "OrangeRed3"))))
+;;  '(font-lock-variable-name-face ((((class color) (min-colors 88) (background light)) (:foreground "peru" :weight bold))))
+;;  '(gnus-summary-cancelled ((t (:foreground "light gray"))))
+;;  '(gnus-summary-normal-read ((((class color) (background light)) (:foreground "dim gray"))))
+;;  '(gnus-summary-normal-ticked ((((class color) (background light)) (:foreground "blue"))))
+;;  '(ido-first-match ((t (:foreground "blue" :weight bold))))
+;;  '(ido-only-match ((((class color)) (:foreground "ForestGreen" :weight bold))))
+;;  '(ido-subdir ((((min-colors 88) (class color)) (:foreground "goldenrod"))))
+;;  '(org-document-title ((((class color) (background light)) (:foreground "midnight blue" :weight bold :height 1.2))))
+;;  '(sh-heredoc ((((class color) (background light)) (:foreground "gray50"))))
+;;  '(widget-field ((t (:background "lightgray")))))

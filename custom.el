@@ -22,13 +22,18 @@
  '(calendar-standard-time-zone-name "PST")
  '(clean-buffer-list-delay-general 1)
  '(column-number-mode t)
+ '(confluence-url "http://tools.myhottestfriends.net/confluence/rpc/xmlrpc")
  '(current-language-environment "UTF-8")
  '(diary-file "~/lib/diary")
+ '(dired-details-hide-link-targets nil)
+ '(dired-dwim-target t)
  '(epa-file-cache-passphrase-for-symmetric-encryption t)
  '(epa-info-window-height 2)
  '(epa-popup-info-window nil)
  '(erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT" "MODE" "333" "353")))
  '(fill-column 76)
+ '(glasses-face (quote bold))
+ '(glasses-separator "")
  '(gnus-alias-default-identity "Berkeley")
  '(gnus-alias-identity-alist (quote (("Berkeley" "" "John Landahl <jlandahl@berkeley.edu>" "UC Berkeley" nil "" "~/.signature") ("UCSC" "" "John Landahl <jlandahl@ucsc.edu>" "UC Santa Cruz" nil "" "") ("landahl.org" "" "John Landahl <john@landahl.org>" "" nil "" ""))))
  '(gnus-article-sort-functions (quote ((not gnus-article-sort-by-number))))
@@ -54,7 +59,7 @@
  '(gnus-summary-gather-subject-limit (quote fuzzy))
  '(gnus-summary-line-format "%U%R%z %(%-16,16&user-date; %-20,20f %uj %*%B%s%)
 ")
- '(gnus-summary-mode-hook (quote (nnmairix-summary-mode-hook gnus-agent-mode highline-local-on)))
+ '(gnus-summary-mode-hook (quote (nnmairix-summary-mode-hook gnus-agent-mode highline-local-on)) t)
  '(gnus-thread-sort-functions (quote ((not gnus-thread-sort-by-date))))
  '(gnus-total-expirable-newsgroups "^nnimap.*")
  '(gnus-update-message-archive-method t)
@@ -82,11 +87,12 @@ Bcc:
  '(org-agenda-skip-deadline-if-done t)
  '(org-agenda-skip-scheduled-if-done t)
  '(org-agenda-tags-todo-honor-ignore-options t)
+ '(org-agenda-timegrid-use-ampm t)
  '(org-agenda-todo-list-sublevels nil)
  '(org-archive-mark-done nil)
- '(org-capture-templates (quote (("t" "Tasks") ("tw" "Todo item to inbox (work)" entry (file+headline "" "Work") "* TODO %?
+ '(org-capture-templates (quote (("t" "Tasks") ("tw" "Todo item to inbox (work)" entry (file+headline "work/pureplay.org" "Inbox") "* TODO %?
   %u
-  %a") ("tp" "Todo item to inbox (personal)" entry (file+headline "" "Personal") "* TODO %?
+  %a") ("tp" "Todo item to inbox (personal)" entry (file+headline "personal/personal.org" "Inbox") "* TODO %?
   %u
   %a") ("n" "note" entry (file+headline "" "Notes") "* %?                                              :NOTE:
   %u
@@ -140,51 +146,30 @@ Bcc:
  '(read-mail-command (quote gnus))
  '(safe-local-variable-values (quote ((epa-file-encrypt-to ”john@landahl\.org”) (flyspell-highlight-flag) (ffip-regexp . ".*\\.groovy") (ffip-regexp . ".*\\.el"))))
  '(scroll-bar-mode (quote right))
+ '(scroll-conservatively 10)
+ '(scroll-margin 0)
+ '(scroll-preserve-screen-position 1)
  '(send-mail-function (quote smtpmail-send-it))
+ '(show-paren-mode t)
  '(smtpmail-auth-credentials "~/lib/emacs/authinfo.gpg")
  '(smtpmail-default-smtp-server "calmail.berkeley.edu")
  '(smtpmail-starttls-credentials (quote (("calmail.berkeley.edu" 25 nil nil))))
  '(tab-width 4)
- '(tramp-default-proxies-alist (quote (("\\.pureplay\\.com" "root\\|build" "/ssh:%h:"))))
+ '(tramp-default-proxies-alist (quote (("pokerdb01" nil nil) ("pokerdb02" nil nil) ("pokerdb03" nil nil) ("\\.pureplay\\.com" "root\\|build\\|jbilling" "/ssh:%h:") ("pp-chef-1" "root" "/ssh:ubuntu@%h:"))))
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)
  '(user-full-name "John Landahl")
  '(user-mail-address "jlandahl@berkeley.edu")
  '(vc-follow-symlinks t)
+ '(visible-bell nil)
  '(w3m-cookie-accept-bad-cookies (quote ask))
  '(woman-manpath (quote ("/usr/man" "/usr/share/man" "/usr/local/man" "c:/cygwin/usr/man" "c:/cygwin/usr/share/man")))
  '(woman-use-own-frame nil)
  '(x-select-enable-clipboard t))
+
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- '(flyspell-duplicate ((t (:foreground "Gold3" :underline t :weight bold))))
- '(gnus-summary-cancelled ((t (:foreground "light gray"))))
- '(gnus-summary-normal-read ((((class color) (background light)) (:foreground "dim gray"))))
- '(gnus-summary-normal-ticked ((((class color) (background light)) (:foreground "blue"))))
- '(ido-first-match ((t (:foreground "blue" :weight bold))))
- '(ido-only-match ((((class color)) (:foreground "ForestGreen" :weight bold))))
- '(ido-subdir ((((min-colors 88) (class color)) (:foreground "goldenrod"))))
- '(org-document-title ((((class color) (background light)) (:foreground "midnight blue" :weight bold :height 1.2))))
- '(widget-field ((t (:background "lightgray")))))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ '(default ((t (:inherit nil :stipple nil :background "white" :foreground "gray14" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
