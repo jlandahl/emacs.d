@@ -64,6 +64,7 @@
  '(gnus-total-expirable-newsgroups "^nnimap.*")
  '(gnus-update-message-archive-method t)
  '(ibuffer-formats (quote ((mark modified read-only " " (name 30 30 :left :elide) " " (size 9 -1 :right) " " (mode 16 16 :left :elide) " " filename-and-process) (mark " " (name 50 50 :left :elide) " " filename))))
+ '(ido-everywhere t)
  '(ido-mode (quote both) nil (ido))
  '(ispell-silently-savep t)
  '(jira-url "http://tools.myhottestfriends.net/jira/rpc/xmlrpc")
