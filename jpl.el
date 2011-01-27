@@ -94,6 +94,7 @@
   (global-set-key "\C-cl" 'org-store-link)
   (global-set-key "\C-ca" 'org-agenda)
   (global-set-key "\C-cb" 'org-iswitchb)
+  ;;(global-set-key [f7] 'org-agenda-)
 
   ;(require 'org-checklist)
   (require 'org-protocol)
@@ -288,6 +289,18 @@
 
   (add-hook 'message-setup-hook 'bbdb-define-all-aliases)
   (setq bbdb-default-country "US"))
+
+;;; misc libraries
+
+(with-library 'ide-skel)
+(with-library 'tabbar)
+
+(with-library 'sqlplus
+  (add-to-list 'auto-mode-alist '("\\.sqp\\'" . sqlplus-mode)))
+
+(with-library 'plsql)
+
+(with-library 'confluence)
 
 ;;; Misc functions
 
