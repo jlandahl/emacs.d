@@ -4,6 +4,7 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
+ '(ack-use-environment nil)
  '(bbdb-always-add-addresses t)
  '(bbdb-auto-notes-alist (quote (("Organization" (".*" company 0 t)) ("Newsgroups" ("[^,]+" newsgroups 0 nil)) ("Subject" (".*" last-subj 0 t)) ("User-Agent" (".*" mailer 0 nil)) ("X-Mailer" (".*" mailer 0 nil)) ("X-Newsreader" (".*" mailer 0 nil)) ("X-Attribution" (".*" attribution 0 t)) ("X-Now-Playing" (".*" music 0 t)) ("X-Face" (".+" face 0 t)) ("Face" (".+" cface 0 t)))))
  '(bbdb-notice-hook (quote (bbdb-auto-notes-hook)))
@@ -81,7 +82,7 @@ Bcc:
  '(nnmail-split-methods (quote (("Calendar/inbox" "^\\(To\\|Cc\\):.*calagenda-admin@berkeley.edu"))))
  '(nxml-child-indent 4)
  '(nxml-outline-child-indent 4)
- '(org-agenda-custom-commands (quote (("w" "Work Agenda" ((agenda "" ((org-agenda-ndays 1) (org-agenda-files (quote ("~/lib/org/work/pureplay.org"))))) (tags-todo "Work+Current" ((org-agenda-overriding-header "Current Tasks") (org-agenda-files (quote ("~/lib/org/work/pureplay.org"))) (org-agenda-sorting-strategy (quote (priority-down)))))) nil ("work.ics")) ("p" "Personal Agenda" ((agenda "" ((org-agenda-ndays 1) (org-agenda-files (quote ("~/lib/org/personal"))))) (tags-todo "Personal" ((org-deadline-warning-days 1)))) nil ("personal.ics")) ("E" "Errands" tags "@errands" nil) ("S" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil))) ("W" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil))) ("i" "Inbox items to be filed" tags "INBOX" ((org-agenda-todo-ignore-with-date nil))) ("n" "Notes" tags "NOTE" nil) ("A" "Tasks to be archived" tags "LEVEL=2/DONE|CANCELLED" nil))))
+ '(org-agenda-custom-commands (quote (("w" "Work Agenda" ((agenda "" ((org-agenda-ndays 1) (org-agenda-files (quote ("~/lib/org/work/pureplay.org"))))) (tags-todo "Work+PRIORITY=\"1\"|PRIORITY=\"2\"" ((org-agenda-overriding-header "Priority Items") (org-agenda-files (quote ("~/lib/org/work/pureplay.org"))) (org-agenda-sorting-strategy (quote (priority-down)))))) nil ("work.ics")) ("p" "Personal Agenda" ((agenda "" ((org-agenda-ndays 1) (org-agenda-files (quote ("~/lib/org/personal"))))) (tags-todo "Personal" ((org-deadline-warning-days 1)))) nil ("personal.ics")) ("E" "Errands" tags "@errands" nil) ("S" "Started Tasks" todo "STARTED" ((org-agenda-todo-ignore-with-date nil))) ("W" "Tasks waiting on something" tags "WAITING" ((org-use-tag-inheritance nil))) ("i" "Inbox items to be filed" tags "INBOX" ((org-agenda-todo-ignore-with-date nil))) ("n" "Notes" tags "NOTE" nil) ("A" "Tasks to be archived" tags "LEVEL=2/DONE|CANCELLED" nil))))
  '(org-agenda-files (quote ("~/lib/org/work/pureplay.org")))
  '(org-agenda-include-diary t)
  '(org-agenda-restore-windows-after-quit t)
@@ -164,7 +165,7 @@ Bcc:
  '(smtpmail-starttls-credentials (quote (("calmail.berkeley.edu" 25 nil nil))))
  '(sqlplus-pagesize 500)
  '(tab-width 4)
- '(tramp-default-proxies-alist (quote (("pokerdb01" nil nil) ("pokerdb02" nil nil) ("pokerdb03" nil nil) ("\\.pureplay\\.com" "root\\|build\\|jbilling" "/ssh:%h:") ("pp-chef-1" "root" "/ssh:ubuntu@%h:"))))
+ '(tramp-default-proxies-alist (quote (("pokerdb01" nil nil) ("pokerdb02" nil nil) ("pokerdb03" nil nil) ("\\.pureplay\\.com" "root\\|build\\|oracle\\|jbilling" "/ssh:%h:"))))
  '(truncate-lines t)
  '(truncate-partial-width-windows nil)
  '(user-full-name "John Landahl")
