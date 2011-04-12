@@ -18,6 +18,9 @@
         browse-url-firefox-program "c:/program files/mozilla firefox/firefox.exe"
         org-mobile-directory "w:/org"))
 
+;; PLEASE don't hide the window when I accidentally hit C-z (about 8 times a day)
+(global-set-key "\C-z" nil)
+
 ;; indent with Enter/C-m please
 (global-set-key "\C-m" 'newline-and-indent)
 
@@ -296,7 +299,11 @@
 (with-library 'tabbar)
 
 (with-library 'sqlplus
-  (add-to-list 'auto-mode-alist '("\\.sqp\\'" . sqlplus-mode)))
+  (add-to-list 'auto-mode-alist '("\\.sqp\\'" . sqlplus-mode))
+  (defadvice sqlplus-verify-buffer (before sqlplus-verify-buffer-and-reconnect activate)
+    (unless (get-buffer-process (sqlplus-get-process-buffer-name connect-string))
+      (sqlplus connect-string)))
+  )
 
 (with-library 'plsql)
 

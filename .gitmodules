@@ -10,3 +10,6 @@
 [submodule "vendor/pivotal"]
 	path = vendor/pivotal
 	url = git://github.com/jxa/pivotal-tracker.git
+[submodule "vendor/yari"]
+	path = vendor/yari
+	url = git://github.com/hron/yari.el.git
